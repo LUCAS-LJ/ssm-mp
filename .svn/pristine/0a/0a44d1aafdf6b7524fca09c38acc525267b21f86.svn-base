@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans
+				http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- activiti配置参数文件，用于配置定义初始化引擎参数,bean,邮件服务器及各种监听 -->
+	
+	<!-- 引擎管理器 -->
+<!-- 	<bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+		<property name="databaseSchemaUpdate" value="true"/>
+		<property name="jobExecutorActivate" value="true" />
+
+        部署drl文件时需要设置一个自定义的部署解析类
+        <property name="customPostDeployers">
+            <list>
+                <bean class="org.activiti.engine.impl.rules.RulesDeployer" />
+            </list>
+        </property>
+	</bean> -->
+	
+	<!-- Activiti处理引擎的配置，交由Spring管理 -->  
+  
+  	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">  
+          	<!-- 配置数据源,和系统使用同一个数据源 -->  
+          	<property name="dataSource" ref="dataSource" />  
+          	<property name="databaseSchemaUpdate" value="true" />  
+          	<property name="jobExecutorActivate" value="false" />  
+          	<!-- 统一的事务管理 -->  
+          	<property name="transactionManager" ref="transactionManager" />  
+          	<property name="activityFontName"  value="宋体" />  
+          	<property name="labelFontName"  value="宋体" /> 
+          	
+          	<!-- 部署规则引擎drl文件时需要设置一个自定义的部署解析类 -->
+        	<property name="customPostDeployers">
+            <list>
+                	<bean class="org.activiti.engine.impl.rules.RulesDeployer" />
+            </list>
+        </property> 
+  	</bean>  
+  	<bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">  
+      		<property name="processEngineConfiguration" ref="processEngineConfiguration" />  
+  	</bean>  
+</beans>

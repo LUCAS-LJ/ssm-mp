@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssm.pay.dao.UserInfoDao">
+	<resultMap id="BaseResultMap" type="com.ssm.pay.common.model.UserInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="uname" property="uname" jdbcType="VARCHAR" />
+		<result column="unumber" property="unumber" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, uname, unumber
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from ssm_userinfo
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		ssm_userinfo
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.ssm.pay.common.model.UserInfo">
+		insert into ssm_userinfo (id,
+		uname, unumber
+		)
+		values (#{id,jdbcType=INTEGER},
+		#{uname,jdbcType=VARCHAR},
+		#{unumber,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.ssm.pay.common.model.UserInfo">
+		insert into ssm_userinfo
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="uname != null">
+				uname,
+			</if>
+			<if test="unumber != null">
+				unumber,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="uname != null">
+				#{uname,jdbcType=VARCHAR},
+			</if>
+			<if test="unumber != null">
+				#{unumber,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.ssm.pay.common.model.UserInfo">
+		update ssm_userinfo
+		<set>
+			<if test="uname != null">
+				uname = #{uname,jdbcType=VARCHAR},
+			</if>
+			<if test="unumber != null">
+				unumber = #{unumber,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.ssm.pay.common.model.UserInfo">
+		update ssm_userinfo
+		set uname = #{uname,jdbcType=VARCHAR},
+		unumber = #{unumber,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	
+</mapper>
